@@ -2,7 +2,7 @@ window.addEventListener('load', () => {
 	
 	document.querySelector('.run').addEventListener('click', () => {
 		
-		const code = document.querySelector(`.editor`).value;
+		const code = document.querySelector(`.editor`).code;
 		let cellArg = new CellArg(code);
 		
 		cellArg.run();

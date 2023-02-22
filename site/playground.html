@@ -7,7 +7,10 @@
 	
 	<link rel="stylesheet" href="styles/styles.css">
 	<link rel="stylesheet" href="styles/playground.css">
+	
 	<script src="scripts/cellarg.min.js"></script>
+	<script src="scripts/cursor.min.js"></script>
+	<script src="scripts/editor.js"></script>
 	<script src="scripts/playground.js"></script>
 </head>
 <body>
@@ -17,7 +20,10 @@
 	
 	<i class="ri-play-fill button run" style=""></i>
 	
-	<!-- <div class="separator"></div>
+	<!-- 
+	Debugger buttons; not implemented yet
+	
+	<div class="separator"></div>
 	
 	<i class="ri-bug-fill button debug"></i>
 	<i class="ri-skip-forward-fill button small debug"></i>
@@ -28,7 +34,7 @@
 
 <div class="main-wrapper">
 	<div class="main-content">
-		<textarea class="editor"></textarea>
+		<cellarg-editor class="editor"></cellarg-editor>
 		
 		<div class="separator"></div>
 		
@@ -37,7 +43,8 @@
 		</div>
 	</div>
 </div>
- 
+
+
 
 </body>
 </html>

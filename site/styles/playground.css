@@ -83,6 +83,7 @@ pre {
 	align-items: center;
 	justify-content: center;
 	flex-grow: 1;
+	max-height: calc(100% - 50px);
 }
 
 .main-content {
