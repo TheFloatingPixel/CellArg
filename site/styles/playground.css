@@ -1,0 +1,118 @@
+:root[data-theme="dark"] {
+	--fg: #ffffff;
+	--bg: #24252a;
+	--fg-2: #5e6375;
+	--fg-3: #cbcfdd;
+	color-scheme: dark !important;
+	--toolbar-bg: #212226;
+  --toolbar-icon: lightblue;
+}
+
+html, body {
+	margin: 0;
+	background-color: var(--bg);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+pre {
+  margin: 0;
+}
+
+.toolbar {
+	width: 100%;
+	height: 50px;
+	background-color: var(--toolbar-bg);
+	box-shadow: #18181b 0 1px 7px;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.toolbar > i {
+	font-size: 32px;
+	color: var(--toolbar-icon);
+}
+
+.toolbar > i:hover {
+	color: #adadff;
+	cursor: pointer;
+}
+
+.toolbar > .separator {
+	width: 1px;
+	height: 20px;
+	background-color: var(--fg-2);
+}
+
+.toolbar > *:not(.right):not(.left):not(:first-child) {
+	margin-left: 15px;
+}
+
+.toolbar > .button.small {
+	font-size: 25px;
+}
+
+.toolbar > .right {
+	margin-left: auto;
+	margin-right: 20px
+}
+.toolbar > .left {
+	margin-right: auto;
+	margin-left: 20px
+}
+
+.toolbar > .logo {
+	white-space: nowrap;
+	width: 0;
+	font-weight: bold;
+	font-family: 'Space Mono', 'Source Code Pro', Consolas, Monospace;
+	color: var(--toolbar-icon);
+}
+
+.main-wrapper {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+}
+
+.main-content {
+	display: flex;
+	max-width: calc(100% - 40px);
+	height: calc(100% - 40px);
+	border-radius: 20px;
+	background-color: rgb(43, 42, 51);
+	flex: 1 1 0px;
+	font-family: 'Space Mono', 'Source Code Pro', Consolas, Monospace;
+	font-size: 13px;
+}
+
+.main-content .editor {
+	width: 0;
+	resize: none;
+	border: none;
+	padding: 15px;
+	background-color: transparent;
+	outline: none;
+	flex: 1 1 0px;
+}
+
+.main-content .separator {
+	width: 1px;
+	background-color: black;
+}
+
+.main-content .console {
+	padding: 15px;
+	flex: 1 1 0px;
+	width: 0;
+}

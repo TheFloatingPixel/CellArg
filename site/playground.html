@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="dark">
 <head>
 	<title>CellArg Playground</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="styles/styles.css">
 	<link rel="stylesheet" href="styles/playground.css">
 	<script src="scripts/cellarg.js"></script>
 	<script src="scripts/playground.js"></script>
 </head>
 <body>
 	
+<div class="toolbar">
+	<span class="left logo">CellArg Playground</span>
+	
+	<i class="ri-play-fill button run" style=""></i>
+	
+	<!-- <div class="separator"></div>
+	
+	<i class="ri-bug-fill button debug"></i>
+	<i class="ri-skip-forward-fill button small debug"></i>
+	<i class="ri-menu-unfold-fill button small jump" style="justify-self: end;"></i> -->
+	
+	<i class="ri-folder-5-fill button files right"></i>
+</div>
+
+<div class="main-wrapper">
+	<div class="main-content">
+		<textarea class="editor"></textarea>
+		
+		<div class="separator"></div>
+		
+		<div class="console">
+			<span class="output">Press the run button up top!</span>
+		</div>
+	</div>
+</div>
+ 
+
 </body>
 </html>
