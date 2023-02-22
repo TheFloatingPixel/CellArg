@@ -16,3 +16,8 @@ jobs:
       - uses: JossyDevers/minify-js@v1.0.1
         with:
           directory: site/scripts/cellarg.js
+      # Auto-commit
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: '(auto) Update and minify cellarg.js'
+          branch: ${{ github.ref }}
