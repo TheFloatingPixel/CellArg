@@ -23,7 +23,11 @@ class CellArg {
 		this.instructions = typeof instructions == `string`? CellArg.parse(instructions): instructions;
 	}
 	
-	run() {}
+	run() {
+		while (this.instructionPointer < this.instructions.length - 1) {
+			this.runInstruction();
+		}
+	}
 	
 	runInstruction() {
 		this.instructionPointer++;
@@ -31,7 +35,7 @@ class CellArg {
 		const Type = CellArg.Instruction.Type; // alias
 		let instruction = this.instructions[this.instructionPointer];
 		
-		const param = instruction.parameters.map(v => this.memory[v]);
+		const param = instruction.parameters.map(v => this.memoryGet(v));
 		
 		switch (instruction.type) {
 			case Type.Add:
@@ -50,7 +54,11 @@ class CellArg {
 				this.printFunction(ch);
 				break;
 			case Type.Input:
-				//TODO: Implement this
+				let val = this.inputFunction();
+				if (typeof val == `string`)
+					val = val.charCodeAt();
+				
+				this.memoryWrite(param[0], val);
 				break;
 		}
 	}
