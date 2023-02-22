@@ -6,8 +6,13 @@ jobs:
   prepare_site:
     runs-on: ubuntu-18.04
     steps:
+      # Check out
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      # Copy cellarg.js
       - run: cp ./src/web/cellarg.js ./site/scripts/
-      - name: Minify-JS Action
-        uses: JossyDevers/minify-js@v1.0.1
+      # Minify site cellarg.js
+      - uses: JossyDevers/minify-js@v1.0.1
         with:
           directory: site/scripts/cellarg.js
