@@ -1,0 +1,13 @@
+on:
+  push:
+    branches:
+    - main
+jobs:
+  prepare_site:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: cp src/web/cellarg.js site/scripts/cellarg.js
+      - name: Minify-JS Action
+        uses: JossyDevers/minify-js@v1.0.1
+        with:
+          directory: site/scripts/cellarg.js
