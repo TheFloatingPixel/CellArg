@@ -6,7 +6,7 @@ jobs:
   prepare_site:
     runs-on: ubuntu-18.04
     steps:
-      - run: cp src/web/cellarg.js site/scripts/
+      - run: cp ./src/web/cellarg.js ./site/scripts/
       - name: Minify-JS Action
         uses: JossyDevers/minify-js@v1.0.1
         with:
