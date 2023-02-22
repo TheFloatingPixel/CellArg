@@ -10,6 +10,7 @@ class CellArg {
 			this.parameters = parameters;
 		}
 	}
+	static instructionRegex = /[\+\-;#$]( ?[0-9])+/g;
 	
 	instructions = [];
 	memory = [0, 1];
@@ -82,7 +83,7 @@ class CellArg {
 	
 	static parse(text) {
 		return text
-			.match(/[\+\-;#$]( ?[0-9])+/g)
+			.match(CellArg.instructionRegex)
 			.map((text) => {
 				// [ "+", "1", "2" ]
 				let data = text.split(' ');
