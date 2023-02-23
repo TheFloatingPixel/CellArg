@@ -14,6 +14,7 @@ html, body {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	font-family: 'Space Mono', 'Source Code Pro', Consolas, Monospace;
 }
 
 * {
@@ -61,10 +62,14 @@ pre {
 
 .toolbar > .right {
 	margin-left: auto;
+}
+.toolbar > .right-end {
 	margin-right: 20px
 }
 .toolbar > .left {
 	margin-right: auto;
+}
+.toolbar > .left-end {
 	margin-left: 20px
 }
 
@@ -74,6 +79,11 @@ pre {
 	font-weight: bold;
 	font-family: 'Space Mono', 'Source Code Pro', Consolas, Monospace;
 	color: var(--toolbar-icon);
+}
+
+.toolbar > .logo > .filename {
+	color: #306565;
+	margin-left: 20px;
 }
 
 .main-wrapper {
@@ -116,4 +126,65 @@ pre {
 	padding: 15px;
 	flex: 1 1 0px;
 	width: 0;
+}
+
+.side-menu {
+	position: fixed;
+	background-color: var(--toolbar-bg);
+	box-shadow: #18181b 0 -2px 7px;
+	height: 100%;
+	transition: 0.25s;
+	right: 0;
+}
+
+.side-menu.projects {
+	width: 325px;
+}
+
+.hidden.projects.side-menu {
+	right: -325px;
+}
+
+.side-menu .title {
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.side-menu.projects .files {
+	height: calc(100% - 50px);
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	font-size: 15px;
+}
+
+.side-menu.projects .files .category {
+	font-weight: bold;
+	font-size: 17px;
+	margin-top: 10px;
+}
+
+.side-menu.projects .files .file {
+	padding-top: 6px;
+	width: 100%;
+	cursor: pointer;
+	height: 30px
+}
+
+.side-menu.projects .files .file .button {
+	float: right;
+	font-size: 20px;
+	color: #4a8282;
+	margin-left: 10px;
+}
+
+.side-menu.projects .files .file .button:hover {
+	color: #66b5b5;
+}
+
+.side-menu.projects .files .file:not(:hover) .button {
+	display: none;
 }

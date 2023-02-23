@@ -12,11 +12,15 @@
 	<script src="scripts/cursor.min.js"></script>
 	<script src="scripts/editor.js"></script>
 	<script src="scripts/playground.js"></script>
+	<script src="scripts/examples.js"></script>
 </head>
 <body>
 	
 <div class="toolbar">
-	<span class="left logo">CellArg Playground</span>
+	<span class="left left-end logo">
+	CellArg Playground
+	<span class="filename">New Project</span>
+	</span>
 	
 	<i class="ri-play-fill button run" style=""></i>
 	
@@ -29,7 +33,8 @@
 	<i class="ri-skip-forward-fill button small debug"></i>
 	<i class="ri-menu-unfold-fill button small jump" style="justify-self: end;"></i> -->
 	
-	<i class="ri-folder-5-fill button files right"></i>
+	<i class="ri-save-fill button save right"></i>
+	<i class="ri-folder-5-fill button files right-end"></i>
 </div>
 
 <div class="main-wrapper">
@@ -44,7 +49,14 @@
 	</div>
 </div>
 
-
+<div class="side-menu projects">
+	<span class="title">Projects</span>
+	<div class="files">
+		<span class="category">Examples</span>
+		<span class="file example hello-world">Hello World</span>
+		<span class="category">Saved projects</span>
+	</div>
+</div>
 
 </body>
 </html>

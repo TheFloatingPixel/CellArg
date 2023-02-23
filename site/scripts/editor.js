@@ -23,7 +23,7 @@ class CellArgEditor extends HTMLElement {
 			overflow-y: auto;
 		`;
 		
-		span.addEventListener('input', () => this.onInput());
+		span.addEventListener('input', () => this.oninput());
 		span.addEventListener('copy', (e) => {
 			
 		})
@@ -62,7 +62,7 @@ class CellArgEditor extends HTMLElement {
 		root.appendChild(style);
 	}
 
-	onInput() {
+	oninput() {
 		let selection = window.getSelection();
 		
 		let caret = Cursor.getCurrentCursorPosition(this.#span);
@@ -93,6 +93,11 @@ class CellArgEditor extends HTMLElement {
 	
 	get code() {
 		return this.#span.innerText;
+	}
+	
+	set code(text) {
+		this.#span.innerText = text;
+		this.oninput();
 	}
 	
 }
