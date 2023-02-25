@@ -128,6 +128,21 @@ pre {
 	width: 0;
 }
 
+.main-content .console .input.visible {
+	display: flex;
+	color: yellow;
+}
+
+.main-content .console .input span {
+	display: inline-block;
+	width: 100%;
+	outline: 0;
+}
+
+.main-content .console .input:not(.visible) {
+	display: none;
+}
+
 .side-menu {
 	position: fixed;
 	background-color: var(--toolbar-bg);
@@ -187,4 +202,16 @@ pre {
 
 .side-menu.projects .files .file:not(:hover) .button {
 	display: none;
+}
+
+.execution-info {
+	margin-top: 5px;
+}
+
+.execution-info.error {
+	color: #ff7c7c;
+}
+
+.execution-info.success {
+	color: #7cff7c;
 }
