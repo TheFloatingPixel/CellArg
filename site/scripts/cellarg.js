@@ -10,6 +10,14 @@ class CellArg {
 			this.parameters = parameters;
 		}
 	}
+	
+	static ExecutionError = class extends Error {
+		constructor(message) {
+			super(message);
+			this.name = "ExecutionError";
+		}
+	}
+	
 	static instructionRegex = /[\+\-;#$]( ?[0-9])+/g;
 	
 	instructions = [];
@@ -20,17 +28,23 @@ class CellArg {
 	printFunction = (ch) => {};
 	inputFunction = () => {};
 	
+	#
+	
 	constructor(instructions) {
 		this.instructions = typeof instructions == `string`? CellArg.parse(instructions): instructions;
 	}
 	
-	run() {
+	async run() {
 		while (this.instructionPointer < this.instructions.length - 1) {
-			this.runInstruction();
+			await this.runInstruction();
+			
+			if (this.instructions[this.instructionPointer].type == CellArg.Instruction.Type.Jump) {
+				
+			}
 		}
 	}
 	
-	runInstruction() {
+	async runInstruction() {
 		this.instructionPointer++;
 		
 		const Type = CellArg.Instruction.Type; // alias
@@ -55,13 +69,14 @@ class CellArg {
 				this.printFunction(ch);
 				break;
 			case Type.Input:
-				let val = this.inputFunction();
+				let val = await this.inputFunction();
 				if (typeof val == `string`)
 					val = val.charCodeAt();
 				
 				this.memoryWrite(param[0], val);
 				break;
 		}
+		
 	}
 	
 	memoryGet(index) {
