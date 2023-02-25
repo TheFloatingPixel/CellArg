@@ -8,34 +8,6 @@ window.addEventListener('load', () => {
 	const createProjectSelection = (name) => {
 		const node = new DOMParser().parseFromString(projectTemplate(name), "text/html").body
 				.firstElementChild;
-			
-		node.querySelector('.edit').addEventListener('click', e => {
-			e.stopPropagation();
-			
-			const newName = prompt(`New name for file '${name}'`);
-			
-			if (newName == null)
-				return
-			
-			playground.renameProject(name, newName);
-		});
-		node.querySelector('.delete').addEventListener('click', e => {
-			e.stopPropagation();
-			
-			if (!confirm(`Remove file ${name}?`))
-				return;
-			
-			localStorage.removeItem('file:' + name);
-			document.querySelector(`.side-menu.projects .files .file[data-file="${name}"]`).remove();
-			
-			playground.fileName = null;
-			document.querySelector(`.editor`).code = "";
-		});
-		node.addEventListener('click', e => {
-			playground.openProject(name);
-			document.querySelector('.side-menu.projects').classList.add('hidden');
-		});
-			
 		return node;
 	}
 	
@@ -50,6 +22,19 @@ window.addEventListener('load', () => {
 				})
 				: {},
 			fileName: null,
+			newProject: () => {
+				const editor = document.querySelector('.editor');
+				
+				if (editor.code.length > 0 
+					&& localStorage.getItem('file:' + playground.fileName) != editor.code
+					&& confirm('Do you want to save the current project?')) {
+					playground.saveProject(playground.fileName);
+				}
+				
+				editor.code = '';
+				playground.fileName = null;
+				document.querySelector('.logo > .filename').innerText = 'New Project';
+			},
 			openProject: (name) => {
 				const editor = document.querySelector('.editor');
 				
@@ -62,6 +47,11 @@ window.addEventListener('load', () => {
 				editor.code = localStorage.getItem('file:' + name);
 				window.playground.fileName = name;
 				document.querySelector('.logo > .filename').innerText = name;
+			},
+			openExample: (name) => {
+				document.querySelector('.editor').code = playground.examples[name];
+				window.playground.fileName = null;
+				document.querySelector('.logo > .filename').innerText = "Example: " + name;
 			},
 			saveProject: () => {
 				if (playground.fileName == null || localStorage.getItem('file:' + playground.fileName) == null) {
@@ -134,26 +124,63 @@ window.addEventListener('load', () => {
 		resultNode.classList.add('success');
 		resultNode.textContent = `Finished successfully in ${(Date.now() - executionStarted) / 1000}s`;
 	});
-	document.querySelector('.save').addEventListener('click', playground.saveProject);
 	
+	// toolbar
+	document.querySelector('.button.new').addEventListener('click', playground.newProject);
+	document.querySelector('.button.save').addEventListener('click', playground.saveProject);
 	document.querySelector('.button.files').addEventListener('click', e => {
 		document.querySelector('.side-menu.projects').classList.remove('hidden');
 		e.stopPropagation();
 	});
 	
+	// prepare projects menu
 	Object.keys(localStorage)
 		.filter(v => v.startsWith('file:'))
 		.map(v => v.substr(5))
 		.forEach(v => {
 			document.querySelector('.side-menu.projects .files').appendChild(createProjectSelection(v));
 		});
+	
+	document.querySelector('.side-menu.projects .files').addEventListener('click', (e) => {
+		e.stopPropagation();
 		
-	document.querySelector('.side-menu.projects .files .example.hello-world').addEventListener('click', () => {
-		document.querySelector('.editor').code = playground.examples.helloWorld;
-		window.playground.fileName = null;
-		document.querySelector('.logo > .filename').innerText = "Example: Hello World";
-		document.querySelector('.side-menu.projects').classList.add('hidden');
-	})
+		const node = e.target;
+		const parentNode = node.parentNode;
+		const classes = node.classList;
+		
+		if (classes.contains('example')) {
+			playground.openExample(node.dataset.example);
+			return;
+		}
+		
+		if (classes.contains('file')) {
+			playground.openProject(node.dataset.file);
+			return;
+		}
+		
+		if (classes.contains('button') && classes.contains('delete')) {
+			if (!confirm(`Remove file ${parentNode.dataset.file}?`))
+				return;
+			
+			localStorage.removeItem('file:' + parentNode.dataset.file);
+			document.querySelector(`.side-menu.projects .files .file[data-file="${parentNode.dataset.file}"]`).remove();
+			
+			playground.fileName = null;
+			document.querySelector(`.editor`).code = "";
+			return;
+		}
+		
+		if (classes.contains('button') && classes.contains('edit')) {
+			const newName = prompt(`New name for file '${parentNode.dataset.file}'`);
+			
+			if (newName == null)
+				return
+				
+			playground.renameProject(parentNode.dataset.file, newName);
+			return;
+		}
+		
+	});
 	
 	window.addEventListener('click', e => {
 		const sideMenu = document.querySelector('.side-menu:not(.hidden)');

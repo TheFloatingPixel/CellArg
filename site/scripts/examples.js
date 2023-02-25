@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
 
 	window.playground.examples = {
-		helloWorld: `This is a Hello World program in CellArg
+		'Hello World': `This is a Hello World program in CellArg
 
 Add 10 to the 10th cell
   Set pointer to 10
@@ -110,6 +110,55 @@ Print ! (33)
   + 5 1
   + 5 1
   + 5 1
-  # 5 `
+  # 5 `,
+		'Truth machine': `TRUTH MACHINE
+
++ 5 1
++ 5 1
++ 5 5
++ 5 1
++ 5 5
++ 0 5
+- 5 5
+
++ 5 1
++ 5 1
++ 5 1
++ 5 1
++ 5 1
++ 5 1
++ 0 5
++ 6 1
+- 5 5
+
++ 5 10
+- 5 1
+- 5 1
++ 0 5
++ 8 1
+
+$ 5
++ 6 5
+- 5 10
+- 5 10
+- 5 10
+- 5 10
+- 5 1
+- 5 1
+- 5 1
+- 5 1
+- 5 1
+- 5 1
+- 5 1
+- 5 1
+
++ 8 10 
++ 8 10 
++ 8 10 
++ 8 10 
+- 8 1  
+
+# 6
+; 8 5`
 	}
 });
