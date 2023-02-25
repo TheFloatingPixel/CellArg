@@ -10,7 +10,14 @@ window.addEventListener('load', () => {
 				.firstElementChild;
 			
 		node.querySelector('.edit').addEventListener('click', e => {
-			prompt(`New name for file '${name}'`)
+			e.stopPropagation();
+			
+			const newName = prompt(`New name for file '${name}'`);
+			
+			if (newName == null)
+				return
+			
+			playground.renameProject(name, newName);
 		});
 		node.querySelector('.delete').addEventListener('click', e => {
 			e.stopPropagation();
@@ -69,19 +76,63 @@ window.addEventListener('load', () => {
 				}
 				
 				localStorage.setItem('file:'+playground.fileName, document.querySelector('.editor').code);
+			},
+			renameProject: (name, newName) => {
+				if (playground.fileName == name) {
+					playground.fileName = newName;
+					document.querySelector('.logo > .filename').innerText = newName;
+				}
+				
+				const data = localStorage.getItem('file:' + name);
+				localStorage.removeItem('file:' + name);
+				localStorage.setItem('file:' + newName, data);
+				
+				document.querySelector(`.side-menu.projects .files .file[data-file="${name}"]`)
+					.replaceWith(createProjectSelection(newName));
 			}
 		}
 	
 	
-	document.querySelector('.run').addEventListener('click', () => {
+	document.querySelector('.run').addEventListener('click', async () => {
+		
+		document.querySelector(`.output`).innerText = '';
+		document.querySelector('.input > span').innerText = '';
+		
+		document.querySelector('.execution-info').innerText = '';
+		document.querySelector('.execution-info').classList.value = 'execution-info';
 		
 		const code = document.querySelector(`.editor`).code;
 		let cellArg = new CellArg(code);
+		cellArg.inputFunction = async () => {
+			const inputParent = document.querySelector('.input');
+			const input = document.querySelector('.input > span');
+			
+			setTimeout(0, () => input.focus());
+			inputParent.classList.add('visible');
+			
+			const promiseFunction = resolve => {
+				input.addEventListener('input', () => {
+					
+					inputParent.classList.remove('visible');
+					input.removeEventListener('input', promiseFunction);
+					
+					resolve(input.textContent.substr(-1));
+					
+				});
+			}
+			
+			return new Promise(promiseFunction);
+		};
 		
-		cellArg.run();
+		const executionStarted = Date.now();
+		
+		await cellArg.run();
 		
 		document.querySelector(`.output`).innerText = cellArg.output;
 		
+		const resultNode = document.querySelector(`.execution-info`);
+		resultNode.classList.add('success');
+		resultNode.textContent = `Finished successfully in ${(Date.now() - executionStarted) / 1000}s`;
 	});
 	document.querySelector('.save').addEventListener('click', playground.saveProject);
 	
