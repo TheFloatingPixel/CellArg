@@ -115,14 +115,21 @@ window.addEventListener('load', () => {
 		};
 		
 		const executionStarted = Date.now();
+		let error = null;
 		
-		await cellArg.run();
+		try {
+			await cellArg.run();
+		} catch (e) {
+			error = e;
+		}
 		
 		document.querySelector(`.output`).innerText = cellArg.output;
 		
 		const resultNode = document.querySelector(`.execution-info`);
-		resultNode.classList.add('success');
-		resultNode.textContent = `Finished successfully in ${(Date.now() - executionStarted) / 1000}s`;
+		resultNode.classList.add(error != null? 'error': 'success');
+		resultNode.textContent = error != null?
+			`Execution failed: ${error.message}`
+			: `Finished successfully in ${(Date.now() - executionStarted) / 1000}s`;
 	});
 	
 	// toolbar

@@ -126,6 +126,12 @@ pre {
 	padding: 15px;
 	flex: 1 1 0px;
 	width: 0;
+	overflow-y: auto;
+}
+
+.main-content .console .output {
+	white-space: break-spaces;
+	word-wrap: break-word;
 }
 
 .main-content .console .input.visible {
@@ -206,6 +212,8 @@ pre {
 
 .execution-info {
 	margin-top: 5px;
+	white-space: break-spaces;
+	word-wrap: break-word;
 }
 
 .execution-info.error {
