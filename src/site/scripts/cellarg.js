@@ -1,3 +1,5 @@
+/* (C) 2023 TheFloatingPixel */
+
 class CellArg {
 	static Instruction = class {
 		static Type = Object.freeze({ Add: '+', Subtract: '-', Jump: ';', Print: '#', Input: '$' });

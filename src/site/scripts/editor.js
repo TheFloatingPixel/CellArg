@@ -1,3 +1,5 @@
+/* (C) 2023 TheFloatingPixel */
+
 class CellArgEditor extends HTMLElement {
 	constructor() {
 		super();

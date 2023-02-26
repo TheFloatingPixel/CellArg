@@ -1,3 +1,5 @@
+/* (C) 2023 TheFloatingPixel */
+
 window.addEventListener('load', () => {
 
 	window.playground.examples = {
