@@ -64,9 +64,7 @@ class CellArg {
 				this.instructionJumpCounts[this.instructionPointer]++;
 				
 				if (this.instructionJumpCounts[this.instructionPointer] >= this.infiniteLoopDetectionTreshold) {
-					throw new CellArg.ExecutionError('an infinite loop was detected. '
-						+ 'If you think this is a false positive, you can change the '
-						+ 'detection treshold in the settings.');
+					throw new CellArg.ExecutionError('an infinite loop was detected.');
 				}
 			
 				if (this.memoryGet(param[1]) != 0)
