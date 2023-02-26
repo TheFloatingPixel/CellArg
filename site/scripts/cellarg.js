@@ -28,7 +28,9 @@ class CellArg {
 	printFunction = (ch) => {};
 	inputFunction = () => {};
 	
-	#
+	infiniteLoopDetectionTreshold = 500;
+	
+	instructionJumpCounts = [];
 	
 	constructor(instructions) {
 		this.instructions = typeof instructions == `string`? CellArg.parse(instructions): instructions;
@@ -37,10 +39,6 @@ class CellArg {
 	async run() {
 		while (this.instructionPointer < this.instructions.length - 1) {
 			await this.runInstruction();
-			
-			if (this.instructions[this.instructionPointer].type == CellArg.Instruction.Type.Jump) {
-				
-			}
 		}
 	}
 	
@@ -60,8 +58,20 @@ class CellArg {
 				this.memoryWrite(param[0], this.memoryGet(param[0]) - this.memoryGet(param[1]));
 				break;
 			case Type.Jump:
+				if (!this.instructionJumpCounts.hasOwnProperty(this.instructionPointer))
+					this.instructionJumpCounts[this.instructionPointer] = 0;
+				
+				this.instructionJumpCounts[this.instructionPointer]++;
+				
+				if (this.instructionJumpCounts[this.instructionPointer] >= this.infiniteLoopDetectionTreshold) {
+					throw new CellArg.ExecutionError('an infinite loop was detected. '
+						+ 'If you think this is a false positive, you can change the '
+						+ 'detection treshold in the settings.');
+				}
+			
 				if (this.memoryGet(param[1]) != 0)
 					this.instructionPointer = this.memoryGet(param[0]);
+				
 				break;
 			case Type.Print:
 				const ch = String.fromCharCode(this.memoryGet(param[0]));
