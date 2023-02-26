@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
 	
 	window.playground = 
 		{ 
-			settings: localStorage.settings.length > 0? 
+			settings: localStorage.settings?.length > 0? 
 				new Proxy(JSON.parse(localStorage.settings), {
 					set(obj, prop, value) {
 						obj[prop] = value;
