@@ -97,22 +97,18 @@ class CellArg {
 	}
 	
 	memoryWrite(index, value) {
-		// Clamp values between 0-255 (inclusive) with overflow
-		value = value % 256;
-		if (value < 0) value = value + 256;
-		
+		if (value < 0) value = Number.MAX_SAFE_INTEGER; // in an ideal implementation, there are no cell limits
+														// (there are still no negative values through)
 		this.memory[index] = value;
 	}
 	
 	static parse(text) {
 		return text
 			.match(CellArg.instructionRegex)
-			.map((text) => {
-				// [ "+", "1", "2" ]
+			?.map((text) => {
 				let data = text.split(' ');
-				//                             get instruction char     make the params into numbers
 				return new CellArg.Instruction(data.shift(), ...data.map(v => +v));
-			});
+			}) ?? [];
 	}
 	
 }
