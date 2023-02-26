@@ -63,8 +63,9 @@ class CellArg {
 				if (!this.instructionJumpCounts.hasOwnProperty(this.instructionPointer))
 					this.instructionJumpCounts[this.instructionPointer] = 0;
 				
+				// Infinite loop detection is not part of the language,
+				// it's just in this implementation
 				this.instructionJumpCounts[this.instructionPointer]++;
-				
 				if (this.instructionJumpCounts[this.instructionPointer] >= this.infiniteLoopDetectionTreshold) {
 					throw new CellArg.ExecutionError('an infinite loop was detected.');
 				}
